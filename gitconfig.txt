@@ -4,8 +4,10 @@ git config --global usar.email lucasspricigo21@gmail.com
 -- Criar um projeto React Native Expo
 npx create-expo-app@latest calculadora --template blank
 
+-- Restaurar o projeto (Toda vez que fizer um clone)
 cd calculadora
 npm i
 
+--executar o projeto
 npx expo start
 npx expo start --android
