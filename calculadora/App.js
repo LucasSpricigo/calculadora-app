@@ -1,14 +1,30 @@
 import { StatusBar } from 'expo-status-bar';
+import { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function App() {
+  const [display, setDisplay] = useState('0');
+  const [previousValue, setPreviousValue] = useState(null);
+  const [operator, setOperator] = useState(null);
+  const [waitingForNewValue, setWaitingForNewValue] = useState(false)
+
+  const handleNumberPress = (num) => {
+    if (waitingForNewValue) {
+      setDisplay(String(num));
+      setWaitingForNewValue(false);
+    } else {
+      setDisplay(display === '0' ? String(num) : display + num);
+    }
+  }
+
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
 
+      {/* Display da Calculadora */}
       <View style={styles.displayContainer}>
         <Text style={styles.displayText} numberOfLines={1}>
-          1634,00
+          {display}
         </Text>
       </View>
 
@@ -28,13 +44,13 @@ export default function App() {
       </View>
 
       <View style={styles.row}>
-        <TouchableOpacity style={styles.buttonNumber}>
+        <TouchableOpacity style={styles.buttonNumber} onPress={() => handleNumberPress(7)}>
           <Text style={styles.buttonText}>7</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonNumber}>
+        <TouchableOpacity style={styles.buttonNumber} onPress={() => handleNumberPress(8)}>
           <Text style={styles.buttonText}>8</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonNumber}>
+        <TouchableOpacity style={styles.buttonNumber} onPress={() => handleNumberPress(9)}>
           <Text style={styles.buttonText}>9</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.operatorButton}>
@@ -43,13 +59,13 @@ export default function App() {
       </View>
 
         <View style={styles.row}>
-        <TouchableOpacity style={styles.buttonNumber}>
+        <TouchableOpacity style={styles.buttonNumber} onPress={() => handleNumberPress(4)}>
           <Text style={styles.buttonText}>4</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonNumber}>
+        <TouchableOpacity style={styles.buttonNumber} onPress={() => handleNumberPress(5)}>
           <Text style={styles.buttonText}>5</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonNumber}>
+        <TouchableOpacity style={styles.buttonNumber} onPress={() => handleNumberPress(6)}>
           <Text style={styles.buttonText}>6</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.operatorButton}>
@@ -58,13 +74,13 @@ export default function App() {
       </View>
 
       <View style={styles.row}>
-        <TouchableOpacity style={styles.buttonNumber}>
+        <TouchableOpacity style={styles.buttonNumber} onPress={() => handleNumberPress(1)}>
           <Text style={styles.buttonText}>1</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonNumber}>
+        <TouchableOpacity style={styles.buttonNumber} onPress={() => handleNumberPress(2)}>
           <Text style={styles.buttonText}>2</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonNumber}>
+        <TouchableOpacity style={styles.buttonNumber} onPress={() => handleNumberPress(3)}>
           <Text style={styles.buttonText}>3</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.operatorButton}>
@@ -73,7 +89,7 @@ export default function App() {
       </View>
 
       <View style={styles.row}>
-        <TouchableOpacity style={[styles.buttonNumber, styles.doubleWidthButton]}>
+        <TouchableOpacity style={[styles.buttonNumber, styles.doubleWidthButton]} onPress={() => handleNumberPress(0)}>
           <Text style={styles.buttonText}>0</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.buttonNumber}>
