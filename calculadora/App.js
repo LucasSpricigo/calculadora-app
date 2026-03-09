@@ -17,6 +17,38 @@ export default function App() {
     }
   }
 
+  const handleClear = () => {
+    setDisplay('0');
+    setPreviousValue(null);
+    setOperator(null);
+    setWaitingForNewValue(false);
+  }
+
+  const handleOperatorPress = (op) => {
+    const inputValue = parseFloat(display);
+
+    if (previousValue === null) {
+      setPreviousValue(inputValue);
+    } else if(operator) {
+      const result = calculate(previousValue, inputValue, operator);
+      setDisplay(String(result));
+      setPreviousValue(result);
+    }
+
+    setWaitingForNewValue(true);
+    setOperator(op);
+  }
+
+  const calculate = (firstValue, secondValue, operator) => {
+    switch (operator) {
+      case '+' : return firstValue + secondValue;
+      case '-' : return firstValue - secondValue;
+      case '*' : return firstValue * secondValue;
+      case '÷' : return firstValue / secondValue;
+      default : return secondValue
+    }
+  }
+
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
@@ -29,7 +61,7 @@ export default function App() {
       </View>
 
       <View style={styles.row}>
-        <TouchableOpacity style={styles.functionButton}>
+        <TouchableOpacity style={styles.functionButton} onPress={handleClear}>
           <Text style={styles.functionText}>C</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.functionButton}>
